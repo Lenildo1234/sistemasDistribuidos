@@ -23,6 +23,11 @@ def disciplina_pelo_id(id_disciplina):
 @app.route('/disciplinas', methods=['POST'])
 def adiciona_disciplina():
     nova_disciplina = request.json
+    try:
+        disciplina = util.localiza(nova_disciplina['id'],'DISCIPLINA')
+        return jsonify({'erro':'id ja utilizada'}),400
+    except util.NotFoundError:
+        pass
     util.adiciona(nova_disciplina, 'DISCIPLINA')
     return jsonify(util.all_for_database('DISCIPLINA'))
 

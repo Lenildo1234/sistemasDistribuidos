@@ -300,7 +300,7 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(r.status_code,400)
         self.assertEqual(r.json()['erro'],'disciplina nao encontrada')
 
-'''
+
     def test_207_criar_com_id_ja_existente(self):
         r_reset = requests.post('http://localhost:5003/reseta')
         self.assertEqual(r_reset.status_code,200)
@@ -309,6 +309,8 @@ class TestStringMethods(unittest.TestCase):
         r = requests.post('http://localhost:5003/disciplinas',json={'id':100,'nome':'distribuidos','status':12,'plano_ensino':'clientes e servidores','carga_horaria':10})
         self.assertEqual(r.status_code,400)
         self.assertEqual(r.json()['erro'],'id ja utilizada')
+
+'''
 
     def test_208_post_com_campos_faltando(self):
         r_reset = requests.post('http://localhost:5003/reseta')
