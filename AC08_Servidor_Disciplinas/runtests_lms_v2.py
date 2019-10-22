@@ -229,7 +229,7 @@ class TestStringMethods(unittest.TestCase):
         r_lista = requests.get('http://localhost:5003/disciplinas')
         self.assertEqual(len(r_lista.json()),tam_inicial)
 
-    def test_201_adiciona_disciplinas(self):
+    def a_201_adiciona_disciplinas(self):
         r = requests.post('http://localhost:5003/disciplinas',json={'id':100,'nome':'estruturas de dados','status':12,'plano_ensino':'dados','carga_horaria':15})
         r = requests.post('http://localhost:5003/disciplinas',json={'id':101,'nome':'distribuidos','status':12,'plano_ensino':'clientes e servidores','carga_horaria':10})
         r_lista = requests.get('http://localhost:5003/disciplinas')

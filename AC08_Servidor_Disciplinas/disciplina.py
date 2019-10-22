@@ -9,8 +9,9 @@ def disciplinas():
 
 @app.route('/disciplinas', methods=['POST'])
 def adiciona_disciplina():
-    nova_disciplina = request.json()
+    nova_disciplina = request.json
     util.adiciona(nova_disciplina, 'DISCIPLINA')
+    return jsonify(util.all_for_database('DISCIPLINA'))
 
 
 if __name__ == '__main__':
