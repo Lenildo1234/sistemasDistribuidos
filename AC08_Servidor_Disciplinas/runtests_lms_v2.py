@@ -4,12 +4,12 @@ import sqlite3
 
 class TestStringMethods(unittest.TestCase):
 
-
-    def a_000_alunos_retorna_lista(self):
+    '''
+    def test_000_alunos_retorna_lista(self):
         r = requests.get('http://localhost:5002/alunos')
         self.assertEqual(type(r.json()),type([]))
 
-    def a_001_adiciona_alunos(self):
+    def test_001_adiciona_alunos(self):
         r = requests.post('http://localhost:5002/alunos',json={'nome':'fernando','id':1})
         r = requests.post('http://localhost:5002/alunos',json={'nome':'roberto','id':2})
         r_lista = requests.get('http://localhost:5002/alunos')
@@ -26,14 +26,14 @@ class TestStringMethods(unittest.TestCase):
         if not achei_roberto:
             self.fail('aluno roberto nao apareceu na lista de alunos')
 
-    def a_002_aluno_por_id(self):
+    def test_002_aluno_por_id(self):
         r = requests.post('http://localhost:5002/alunos',json={'nome':'mario','id':20})
         r_id = requests.get('http://localhost:5002/alunos/20')
         self.assertEqual(r_id.json()['nome'],'mario')
 
 
     
-    def a_003_adiciona_e_reseta(self):
+    def test_003_adiciona_e_reseta(self):
         r = requests.post('http://localhost:5002/alunos',json={'nome':'cicero','id':29})
         r_lista = requests.get('http://localhost:5002/alunos')
         self.assertTrue(len(r_lista.json()) > 0)
@@ -42,7 +42,7 @@ class TestStringMethods(unittest.TestCase):
         r_lista_depois = requests.get('http://localhost:5002/alunos')
         self.assertEqual(len(r_lista_depois.json()),0)
 
-    def a_004_adiciona_e_deleta(self):
+    def test_004_adiciona_e_deleta(self):
         r_reset = requests.post('http://localhost:5002/reseta')
         self.assertEqual(r_reset.status_code,200)
         requests.post('http://localhost:5002/alunos',json={'nome':'cicero','id':29})
@@ -53,7 +53,7 @@ class TestStringMethods(unittest.TestCase):
         r_lista = requests.get('http://localhost:5002/alunos')
         self.assertEqual(len(r_lista.json()),1)
     
-    def a_005_edita(self):
+    def test_005_edita(self):
         r_reset = requests.post('http://localhost:5002/reseta')
         self.assertEqual(r_reset.status_code,200)
         requests.post('http://localhost:5002/alunos',json={'nome':'lucas','id':28})
@@ -63,7 +63,7 @@ class TestStringMethods(unittest.TestCase):
         r_depois = requests.get('http://localhost:5002/alunos/28')
         self.assertEqual(r_depois.json()['nome'],'lucas mendes')
 
-    def a_006_id_inexistente(self):
+    def test_006_id_inexistente(self):
         r_reset = requests.post('http://localhost:5002/reseta')
         self.assertEqual(r_reset.status_code,200)
         r = requests.put('http://localhost:5002/alunos/15',json={'nome':'bowser','id':15})
@@ -76,7 +76,7 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(r.status_code,400)
         self.assertEqual(r.json()['erro'],'aluno nao encontrado')
 
-    def a_007_criar_com_id_ja_existente(self):
+    def test_007_criar_com_id_ja_existente(self):
         r_reset = requests.post('http://localhost:5002/reseta')
         self.assertEqual(r_reset.status_code,200)
         r = requests.post('http://localhost:5002/alunos',json={'nome':'bond','id':7})
@@ -85,7 +85,7 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(r.status_code,400)
         self.assertEqual(r.json()['erro'],'id ja utilizada')
 
-    def a_008_post_ou_put_sem_nome(self):
+    def test_008_post_ou_put_sem_nome(self):
         r_reset = requests.post('http://localhost:5002/reseta')
         self.assertEqual(r_reset.status_code,200)
         r = requests.post('http://localhost:5002/alunos',json={'id':8})
@@ -99,11 +99,11 @@ class TestStringMethods(unittest.TestCase):
     
 
     
-    def a_100_professores_retorna_lista(self):
+    def test_100_professores_retorna_lista(self):
         r = requests.get('http://localhost:5002/professores')
         self.assertEqual(type(r.json()),type([]))
     
-    def a_100b_nao_confundir_professor_e_aluno(self):
+    def test_100b_nao_confundir_professor_e_aluno(self):
         r_reset = requests.post('http://localhost:5002/reseta')
         r = requests.post('http://localhost:5002/alunos',json={'nome':'fernando','id':1})
         self.assertEqual(r.status_code,200)
@@ -114,7 +114,7 @@ class TestStringMethods(unittest.TestCase):
         r_lista_alunos = requests.get('http://localhost:5002/alunos')
         self.assertEqual(len(r_lista_alunos.json()),2)
 
-    def a_101_adiciona_professores(self):
+    def test_101_adiciona_professores(self):
         r = requests.post('http://localhost:5002/professores',json={'nome':'fernando','id':1})
         r = requests.post('http://localhost:5002/professores',json={'nome':'roberto','id':2})
         r_lista = requests.get('http://localhost:5002/professores')
@@ -130,14 +130,14 @@ class TestStringMethods(unittest.TestCase):
         if not achei_roberto:
             self.fail('professor roberto nao apareceu na lista de professores')
 
-    def a_102_professores_por_id(self):
+    def test_102_professores_por_id(self):
         r = requests.post('http://localhost:5002/professores',json={'nome':'mario','id':20})
         r_lista = requests.get('http://localhost:5002/professores/20')
         self.assertEqual(r_lista.json()['nome'],'mario')
 
 
     
-    def a_103_adiciona_e_reseta(self):
+    def test_103_adiciona_e_reseta(self):
         r = requests.post('http://localhost:5002/professores',json={'nome':'cicero','id':29})
         r_lista = requests.get('http://localhost:5002/professores')
         self.assertTrue(len(r_lista.json()) > 0)
@@ -146,7 +146,7 @@ class TestStringMethods(unittest.TestCase):
         r_lista_depois = requests.get('http://localhost:5002/professores')
         self.assertEqual(len(r_lista_depois.json()),0)
 
-    def a_104_adiciona_e_deleta(self):
+    def test_104_adiciona_e_deleta(self):
         r_reset = requests.post('http://localhost:5002/reseta')
         self.assertEqual(r_reset.status_code,200)
         requests.post('http://localhost:5002/professores',json={'nome':'cicero','id':29})
@@ -157,7 +157,7 @@ class TestStringMethods(unittest.TestCase):
         r_lista = requests.get('http://localhost:5002/professores')
         self.assertEqual(len(r_lista.json()),1)
     
-    def a_105_edita(self):
+    def test_105_edita(self):
         r_reset = requests.post('http://localhost:5002/reseta')
         self.assertEqual(r_reset.status_code,200)
         requests.post('http://localhost:5002/professores',json={'nome':'lucas','id':28})
@@ -167,7 +167,7 @@ class TestStringMethods(unittest.TestCase):
         r_depois = requests.get('http://localhost:5002/professores/28')
         self.assertEqual(r_depois.json()['nome'],'lucas mendes')
 
-    def a_106_id_inexistente(self):
+    def test_106_id_inexistente(self):
         r_reset = requests.post('http://localhost:5002/reseta')
         self.assertEqual(r_reset.status_code,200)
         r = requests.put('http://localhost:5002/professores/15',json={'nome':'bowser','id':15})
@@ -180,7 +180,7 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(r.status_code,400)
         self.assertEqual(r.json()['erro'],'professor nao encontrado')
 
-    def a_107_criar_com_id_ja_existente(self):
+    def test_107_criar_com_id_ja_existente(self):
         r_reset = requests.post('http://localhost:5002/reseta')
         self.assertEqual(r_reset.status_code,200)
         r = requests.post('http://localhost:5002/professores',json={'nome':'bond','id':7})
@@ -189,7 +189,7 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(r.status_code,400)
         self.assertEqual(r.json()['erro'],'id ja utilizada')
 
-    def a_108_post_ou_put_sem_nome(self):
+    def test_108_post_ou_put_sem_nome(self):
         r_reset = requests.post('http://localhost:5002/reseta')
         self.assertEqual(r_reset.status_code,200)
         r = requests.post('http://localhost:5002/professores',json={'id':8})
@@ -201,7 +201,7 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(r.status_code,400)
         self.assertEqual(r.json()['erro'],'professor sem nome')
 
-    def a_109_nao_confundir_professor_e_aluno(self):
+    def test_109_nao_confundir_professor_e_aluno(self):
         r_reset = requests.post('http://localhost:5002/reseta')
         r = requests.post('http://localhost:5002/professores',json={'nome':'fernando','id':1})
         self.assertEqual(r.status_code,200)
@@ -212,12 +212,12 @@ class TestStringMethods(unittest.TestCase):
         r_lista_alunos = requests.get('http://localhost:5002/alunos')
         self.assertEqual(len(r_lista_alunos.json()),0)
 
-    def a_200_disciplinas_retorna_lista(self):
+    def test_200_disciplinas_retorna_lista(self):
         r_reset = requests.post('http://localhost:5003/reseta')
         r = requests.get('http://localhost:5003/disciplinas')
         self.assertEqual(type(r.json()),type([]))
     
-    def a_200b_nao_confundir_disciplina_e_pessoas(self):
+    def test_200b_nao_confundir_disciplina_e_pessoas(self):
         r_lista = requests.get('http://localhost:5003/disciplinas')
         tam_inicial = len(r_lista.json())
         r_reset = requests.post('http://localhost:5002/reseta')
@@ -229,7 +229,7 @@ class TestStringMethods(unittest.TestCase):
         r_lista = requests.get('http://localhost:5003/disciplinas')
         self.assertEqual(len(r_lista.json()),tam_inicial)
 
-    def a_201_adiciona_disciplinas(self):
+    def test_201_adiciona_disciplinas(self):
         r = requests.post('http://localhost:5003/disciplinas',json={'id':100,'nome':'estruturas de dados','status':12,'plano_ensino':'dados','carga_horaria':15})
         r = requests.post('http://localhost:5003/disciplinas',json={'id':101,'nome':'distribuidos','status':12,'plano_ensino':'clientes e servidores','carga_horaria':10})
         r_lista = requests.get('http://localhost:5003/disciplinas')
@@ -244,7 +244,7 @@ class TestStringMethods(unittest.TestCase):
             self.fail('disciplina estrutura de dados nao apareceu na lista de disciplinas')
         if not achei_distribuidos:
             self.fail('disciplina distribuidos nao apareceu na lista de disciplinas')
-
+    '''
     def test_202_disciplinas_por_id(self):
         r = requests.post('http://localhost:5003/disciplinas',json={'id':103,'nome':'matematica','status':12,'plano_ensino':'funcoes e calculo','carga_horaria':15})
         r_lista = requests.get('http://localhost:5003/disciplinas/103')

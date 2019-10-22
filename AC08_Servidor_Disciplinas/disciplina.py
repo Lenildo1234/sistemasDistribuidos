@@ -7,6 +7,16 @@ def disciplinas():
     return jsonify(util.all_for_database('DISCIPLINA'))
 
 
+@app.route('/disciplinas/<int:id_disciplina>', methods=['GET'])
+def disciplinas(id_disciplina):
+    try: 
+        disciplina = util.localiza(id_disciplina,'DISCIPLINA')
+        return jsonify(disciplina)
+    except util.NotFoundError:
+        return jsonify({'erro':'disciplina nao encontrada'}),400
+    
+
+
 @app.route('/disciplinas', methods=['POST'])
 def adiciona_disciplina():
     nova_disciplina = request.json
