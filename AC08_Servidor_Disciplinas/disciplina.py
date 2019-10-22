@@ -27,10 +27,21 @@ def adiciona_disciplina():
     return jsonify(util.all_for_database('DISCIPLINA'))
 
 
+
 @app.route('/reseta', methods=['POST'])
 def reseta_disciplinas():
     util.reseta()
     return 'banco resetado'
+
+
+@app.route('/disciplinas/<int:id_disciplina>', methods=['DELETE'])
+def deleta_disciplina(id_disciplina):
+    try: 
+        disciplina = util.localiza(id_disciplina,'DISCIPLINA')
+        removido = util.remove(disciplina,'DISCIPLINA')
+        return jsonify(removido)
+    except util.NotFoundError:
+        return jsonify({'erro':'disciplina nao encontrada'}),400
 
 if __name__ == '__main__':
     app.run(host='localhost', port=5003, debug=True)
