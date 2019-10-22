@@ -2,6 +2,9 @@ from flask import Flask, jsonify, request
 import util
 app = Flask(__name__)
 
+@app.route('/')
+def all():
+    return jsonify(database)
 
 @app.route('/disciplinas', methods=['GET'])
 def disciplinas():
@@ -17,13 +20,17 @@ def disciplina_pelo_id(id_disciplina):
         return jsonify({'erro':'disciplina nao encontrada'}),400
     
 
-
 @app.route('/disciplinas', methods=['POST'])
 def adiciona_disciplina():
     nova_disciplina = request.json
     util.adiciona(nova_disciplina, 'DISCIPLINA')
     return jsonify(util.all_for_database('DISCIPLINA'))
 
+
+@app.route('/reseta', methods=['POST'])
+def reseta_disciplinas():
+    util.reseta()
+    return 'banco resetado'
 
 if __name__ == '__main__':
     app.run(host='localhost', port=5003, debug=True)

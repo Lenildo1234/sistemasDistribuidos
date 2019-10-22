@@ -244,7 +244,7 @@ class TestStringMethods(unittest.TestCase):
             self.fail('disciplina estrutura de dados nao apareceu na lista de disciplinas')
         if not achei_distribuidos:
             self.fail('disciplina distribuidos nao apareceu na lista de disciplinas')
-    '''
+    
     def test_202_disciplinas_por_id(self):
         r = requests.post('http://localhost:5003/disciplinas',json={'id':103,'nome':'matematica','status':12,'plano_ensino':'funcoes e calculo','carga_horaria':15})
         r_lista = requests.get('http://localhost:5003/disciplinas/103')
@@ -264,7 +264,8 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(r_reset.status_code,200)
         r_lista_depois = requests.get('http://localhost:5003/disciplinas')
         self.assertEqual(len(r_lista_depois.json()),0)
-
+'''
+    
     def test_204_adiciona_e_deleta(self):
         r_reset = requests.post('http://localhost:5003/reseta')
         self.assertEqual(r_reset.status_code,200)
