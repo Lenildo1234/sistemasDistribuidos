@@ -43,5 +43,19 @@ def deleta_disciplina(id_disciplina):
     except util.NotFoundError:
         return jsonify({'erro':'disciplina nao encontrada'}),400
 
+@app.route('/disciplinas/<int:id_disciplina>', methods=['PUT'])
+def edita_disciplina(id_disciplina):
+    try: 
+        disciplina = util.localiza(id_disciplina,'DISCIPLINA')
+        novo = request.json
+        if 'nome' not in novo:
+            return jsonify({'erro':'disciplina nao encontrada'}),400
+        for key in disciplina:
+            if key in novo:
+                disciplina[key] = novo[key]
+        return jsonify(disciplina)
+    except util.NotFoundError:
+        return jsonify({'erro':'disciplina nao encontrada'}),400
+
 if __name__ == '__main__':
     app.run(host='localhost', port=5003, debug=True)
