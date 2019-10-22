@@ -2,13 +2,14 @@ from flask import Flask, jsonify, request
 import util
 app = Flask(__name__)
 
+
 @app.route('/disciplinas', methods=['GET'])
 def disciplinas():
     return jsonify(util.all_for_database('DISCIPLINA'))
 
 
 @app.route('/disciplinas/<int:id_disciplina>', methods=['GET'])
-def disciplinas(id_disciplina):
+def disciplina_pelo_id(id_disciplina):
     try: 
         disciplina = util.localiza(id_disciplina,'DISCIPLINA')
         return jsonify(disciplina)
